@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Weather Wherever</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        
+        <link rel="stylesheet" href="src/style.css">
+        <h1>
+            Weather Wherever
+        </h1>
+        <h2></h2>
+        <h3></h3>
+        <form id="search-city">
+            <input type="text" placeholder="Enter the city wherever you are..." autocomplete="off" autofocus="on" id="search-city-input" />
+        
+            <input type="submit" value="Search" />
+        </form>
+
+        <div class="card mb-6">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="images/cloudsun.PNG" alt="cloudsun" width="400px">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h2 class="card-title">T O D A Y:</h2>
+                        <h2 class="card-text" id="todays-temp">18</h2><span class="degree">°C</span>
+                        <p class="card-text"><small class="text-muted">Cloudy with some sunshine.<br />Have a good day!</small></p>
+                        <p class="card-text"><small class="text-muted">Chance of rain: 0%</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col">M O N D A Y<br /><img src="images/sun.png" alt="sunny" width=175px><br />S U N S H I N E<div class="temp">23°C</div></div>
+            <div class="col">T U E S D A Y<br /><img src="images/cloud.png" alt="cloudy" width=175px><br />C L O U D Y<div class="temp">17°C</div></div>
+            <div class="col">W E D N E S D A Y<br /><img src="images/cloud.PNG" alt="cloudy" width=175px><br />C L O U D Y<div class="temp">16°C</div></div>
+            <div class="col">T H U R S D A Y<br /><img src="images/rain.PNG" alt="rainy" width=175px><br />R A I N Y   D A Y<div class="temp">15°C</div></div>
+            <div class="col">F R I D A Y<br /><img src="images/sun.PNG" alt="sunny" width=175px><br />S U N S H I N E<div class="temp">21°C</div></div>
+        </div>
+<br />
+<br />
+<p class="made">
+            made by kelly wiltshire
+        </p>
+</div>
+<script>
+
+       let now = new Date();
+
+            let h3 = document.querySelector("h3");
+
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            let day = days[now.getDay()];
+
+            h3.innerHTML = `It's ${day}, ${hours}:${minutes}`;
+
+
+    function searchCity(event) {
+            event.preventDefault();
+            let city = document.querySelector("#search-city-input").value;
+            showCity(city);
+    }
+
+    let searchForm = document.querySelector("#search-city");
+        searchForm.addEventListener("submit", searchCity);
+
+    function showCity(city) {
+        
+            let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+            let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16d9fc42d39c76663ac8f35eeafa30a4&units=metric`;
+            axios.get(apiUrl).then(weatherToday);
+
+    }
+
+    function weatherToday(response) {
+            document.querySelector("h1").innerHTML = response.data.name;
+            document.querySelector("#todays-temp").innerHTML = Math.round(response.data.main.temp);
+    }
+
+    </script>
+</body>
+</html>
+
